@@ -4,9 +4,9 @@
 	import AboutMeSection from "$components/Sections/AboutMeSection.svelte";
 
 	const {data} = $props();
-	$inspect(data);
+	let {workExperience} = data;
 
 </script>
 
 <HeroSection />
-<AboutMeSection />
+<AboutMeSection {workExperience} />
