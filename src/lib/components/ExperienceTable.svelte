@@ -18,7 +18,7 @@
                     <div class="company-and-date">
                         <p>{job.company}</p>
                         <p class="dark-grey">
-                            {job.startDate?.slice(0, 7)}
+                            {job.startDate.slice(0, 7)}
                             {#if job.endDate}
                                 / {job.endDate.slice(0, 7)}
                             {:else}
@@ -30,7 +30,7 @@
             </li>
         {/each}
     </ul>
-    <h2 class="headline">Past work <br/> Experience</h2>
+    <h2 class="headline">Past work<br/>Experience</h2>
 </section>
 
 <style>

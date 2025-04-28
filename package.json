@@ -25,6 +25,7 @@
 		"vite": "^6.2.5"
 	},
 	"dependencies": {
-		"@sanity/client": "^6.28.4"
+		"@sanity/client": "^6.28.4",
+		"sanity": "^3.86.1"
 	}
 }
