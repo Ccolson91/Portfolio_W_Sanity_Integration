@@ -1,6 +1,7 @@
 <script>
 
 	import {AboutMeSection, HeroSection, MyWorkSection, SkillsSection} from "$components";
+	import ContactSection from "$components/Sections/ContactSection.svelte";
 
 	
 	
@@ -14,3 +15,4 @@
 <AboutMeSection {workExperience} />
 <MyWorkSection {projects} />
 <SkillsSection {skills} />
+<ContactSection />
