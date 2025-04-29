@@ -96,3 +96,9 @@ interface ProcessedImageContent {
   type: 'image';
   url: string;
 }
+
+interface Skill {
+  name: string
+  iconClass: string
+  _key: string
+}
