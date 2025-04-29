@@ -11,6 +11,6 @@ export const load: PageLoad = async () => {
     // console.log(rawProjects);
 
     return {
-        workExperience
+        workExperience, projects
     };
 }

@@ -82,6 +82,7 @@ interface ProcessedProject {
   dateAccomplished: string;
   stack: string[];
   projectImageUrl: string;
+  slug: string;
   content: Array<ProcessedTextContent | ProcessedImageContent>;
 }
 

@@ -21,8 +21,9 @@ export function processProjectEntries(rawProject: SanityProject) {
         company: rawProject.company,
         dateAccomplished: rawProject.dateAccomplished,
         stack: rawProject.stack,
+        slug: rawProject.slug,
         projectImageUrl,
-        content: rawProject.content.map(processProjectContent)
+        content: rawProject.content.map(processProjectContent),
     };
 
     return processedProject;
