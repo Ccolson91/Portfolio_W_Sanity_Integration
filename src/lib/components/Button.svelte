@@ -1,5 +1,6 @@
 <script lang='ts'>
     import type {Snippet} from "svelte";
+
     interface ButtonProps {
         children: Snippet,
         onclick: ((e: MouseEvent) => void) | (() => void)
@@ -22,5 +23,9 @@
         font-size: 24px;
         padding: 14px 40px;
         border-radius: 10px;
+    }
+    .nav-bar {
+        padding: 10px 24px;
+        font-size: 20px;
     }
 </style>

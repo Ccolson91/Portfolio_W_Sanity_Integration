@@ -1,46 +1,104 @@
 <script lang="ts">
-	import { Button, SectionHeadline } from "$components";
-
+    import { Button, SectionHeadline } from "$components";
+  
     let contactName = $state("");
     let contactMail = $state("");
-    let infoAboutProject = $state("");
+    let informationAboutProject = $state("");
     let isFormInvalid = $state(false);
-
-    function onSubmit(event: Event) {
-        event.preventDefault();
-
-        if (contactMail && contactName && infoAboutProject) {
-            // send data to project
+    let isEmailSent = $state(false);
+    let showErrorMessage = $state(false);
+    let isLoading = $state(false);
+  
+    async function onSubmit(event: Event) {
+      event.preventDefault();
+  
+      if (contactMail && contactName && informationAboutProject) {
+        isLoading = true;
+        const response = await fetch("/api/send-mail", {
+          method: "POST",
+          body: JSON.stringify({
+            contactName,
+            contactMail,
+            informationAboutProject,
+          }),
+          headers: { "Content-Type": "application/json" },
+        });
+        isLoading = false;
+        if (response.ok) {
+          isEmailSent = true;
         } else {
-            isFormInvalid = true;
+          showErrorMessage = true;
         }
-
-        console.log(contactName, contactMail, infoAboutProject);
+      } else {
+        isFormInvalid = true;
+      }
     }
+  
     $effect(() => {
-        if (contactName || contactMail || infoAboutProject) {
-            isFormInvalid = false;
-        }
-    })
-
-</script>
-<section class="mt-l">
+      if (contactName || contactMail || informationAboutProject) {
+        isFormInvalid = false;
+      }
+    });
+  </script>
+  
+  <section class="mt-l">
     <SectionHeadline sectionName="contact-form">Let's talk</SectionHeadline>
     <div class="form-container default-margin mt-m">
-        <form>
-            <input class="text-input mb-m" class:input-error={isFormInvalid && !Boolean(contactName.length)} placeholder="Your Name" bind:value={contactName} />
-            <input class="text-input mb-m" class:input-error={isFormInvalid && !Boolean(contactMail.length)} placeholder="Your Email" bind:value={contactMail} />
-            <textarea class:input-error={isFormInvalid && !Boolean(infoAboutProject.length)} placeholder="What's on your mind?" bind:value={infoAboutProject}></textarea>
-            <Button onclick={onSubmit}>Submit</Button>
-        </form>
-        <div class="form-text">
-            <h3 class="bold mb-s">Talk to me about your project</h3>
-            <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus sunt atque dolores ea voluptates repellat quo doloribus, repudiandae non impedit eius inventore, pariatur magni suscipit magnam corporis maiores illo quasi?
-            </p>
+      {#if isEmailSent}
+        <div class="spinner-container">
+          <h3>
+            Thank you for getting in contact with me. I'll usually reply<br>within 48
+            hours.
+          </h3>
         </div>
+      {:else if isLoading}
+        <div class="spinner-container">
+          <div class="spinner"></div>
+          <h3>Sending off the contact form.</h3>
+        </div>
+      {:else if showErrorMessage}
+        <h3>
+          We seem to have trouble with our server at the moment. Please send me an
+          email directly to <a class="link" href="mailto:christiancolson91@gmail.com">
+            christiancolson91@gmail.com
+          </a>
+        </h3>
+      {:else}
+        <form>
+          <input
+            class="text-input mb-m"
+            class:input-error={isFormInvalid && !Boolean(contactName.length)}
+            placeholder="Your Name"
+            bind:value={contactName}
+          />
+          <input
+            class="text-input mb-m"
+            class:input-error={isFormInvalid && !Boolean(contactMail.length)}
+            placeholder="Your Email"
+            bind:value={contactMail}
+          />
+          <textarea
+            placeholder="Tell me what's up."
+            class:input-error={isFormInvalid &&
+              !Boolean(informationAboutProject.length)}
+            bind:value={informationAboutProject}
+          ></textarea>
+          <Button onclick={onSubmit}>Submit</Button>
+        </form>
+      {/if}
+      <div class="form-text">
+        <h3 class="bold mb-s">Talk to me about your project</h3>
+        <p>
+          I'm always excited to hear about new and innovative ideas! Whether
+          you're in the early stages of planning or have a well-defined project,
+          I'm here to help bring your vision to life. Feel free to drop me a
+          message with some details about your project, and let's start a
+          conversation about how we can work together. I look forward to
+          connecting with you and discussing the possibilities. Talk to you soon!
+        </p>
+      </div>
     </div>
-</section>
+  </section>
 
 <style>
     section {
